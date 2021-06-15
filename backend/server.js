@@ -37,6 +37,8 @@ db.mongoose
 
 //Initialize routes
 app.use('/api', require('./routes/user.route'));
+app.use('/api', require('./routes/car.route'));
+app.use('/api', require('./routes/comment.route'));
 
 app.listen(PORT, function(){
     console.log('Server starts on port ' + PORT);
