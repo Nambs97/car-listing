@@ -18,8 +18,11 @@ class Dashboard extends Component {
             <h4>
               <b>Hey there,</b> {user.name.split(" ")[0]}
               <p className="flow-text grey-text text-darken-1">
-                You are logged into a full-stack{" "}
-                <span style={{ fontFamily: "monospace" }}>MERN</span> app 👏
+                You are logged into {" "}
+                <span style={{ fontFamily: "monospace" }}>CAR LISTING</span> app 👏
+              </p>
+              <p className="flow-text grey-text text-darken-1">
+                See below list of all available cars :
               </p>
             </h4>
             <button
