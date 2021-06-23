@@ -9,11 +9,13 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import Navbar from "./components/layouts/Navbar";
-import Landing from "./components/layouts/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
+import PostCar from "./components/car/post-car.component";
+import CarsList from "./components/car/car-list.component";
+import Car from "./components/car/car.component";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -38,11 +40,14 @@ function App() {
       <Router>
         <div className="App">
         <Navbar />
-            <Route exact path="/" component={Landing} />
+            <Route exact path="/" component={CarsList} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/cars" component={CarsList} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/post-car" component={PostCar} />
+              <PrivateRoute exact path="/cars/:id" component={Car} />
             </Switch>
         </div>
       </Router>

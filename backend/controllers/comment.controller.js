@@ -33,8 +33,22 @@ exports.postComment = (req, res) => {
 
 // Retrieve all Comments from the database.
 exports.findAll = (req, res) => {
-    const car_id = req.params.carid;
-    var condition = car_id ? { car_id: { $regex: new RegExp(car_id), $options: "i" } } : {};
+    //const car_id = req.params.carid;
+    //var condition = car_id ? { car_id: { $regex: new RegExp(car_id), $options: "i" } } : {};
+    const car = req.query.car;
+    const user = req.query.user;
+    var condition = {};
+
+    if (car && !user) {
+        condition = { car_id: { $regex: new RegExp(car), $options: "i" } }
+    } else if (!car && user) {
+        condition = { user_id: { $regex: new RegExp(user), $options: "i" } }
+    } else if (car && user) {
+        condition = { 
+            car_id: { $regex: new RegExp(car), $options: "i" },
+            user_id: { $regex: new RegExp(user), $options: "i" }
+        }
+    }
 
     Comment.find(condition)
     .then(data => {

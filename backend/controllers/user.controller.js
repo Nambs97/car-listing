@@ -60,6 +60,7 @@ exports.login = (req, res) => {
     User.findOne({ username }).then(user => {
         // Check if user exists
         if (!user) {
+            console.log("404 Error : { usernamenotfound: \"Username not found\" }");
             return res.status(404).json({ usernamenotfound: "Username not found" });
         }
         
@@ -98,100 +99,42 @@ exports.login = (req, res) => {
     });
 };
 
-// Retrieve all Orders from the database.
-exports.findAll = (req, res) => {
-    const psid = req.query.psid;
-    var condition = psid ? { customer_id: { $regex: new RegExp(psid), $options: "i" } } : {};
-
-    Order.find(condition)
-    .then(data => {
-        res.send(data);
-    })
-    .catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while retrieving orders."
-        });
-    });
-};
-
-// Find a single Orders with an id
+// Get a User by ID
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Order.findById(id)
+    User.findById(id)
         .then(data => {
             if (!data)
-                res.status(404).send({ message: "Not found Order with id " + id });
+                res.status(404).send({ message: "Not found User with id " + id });
             else res.send(data);
         })
         .catch(err => {
             res
             .status(500)
-            .send({ message: "Error retrieving Tutorial with id=" + id });
+            .send({ message: "Error retrieving User with id=" + id });
         });
 };
 
-// Update a Order by the id in the request
-exports.update = (req, res) => {
-    if (!req.body) {
-        return res.status(400).send({
-            message: "Data to update can not be empty!"
-        });
-    }
-    
-    const id = req.params.id;
 
-    Order.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+// Retrieve all Users or Some responding to condition from the database.
+exports.findAll = (req, res) => {
+    const username = req.query.username;
+    var condition = username ? { username: { $regex: new RegExp(username), $options: "i" } } : {};
+
+    User.find(condition)
     .then(data => {
-        if (!data) {
-            res.status(404).send({
-                message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`
-            });
-        } else res.send({ message: "Order was updated successfully." });
+        if (data.length > 0) {
+            res.send(data);
+        } else {
+            res.status(404).send({ message: "Not found User with current filter" });
+        }
+        
     })
     .catch(err => {
         res.status(500).send({
-            message: "Error updating Tutorial with id=" + id
-        });
-    });
-};
-
-// Delete a Order with the specified id in the request
-exports.delete = (req, res) => {
-    const id = req.params.id;
-
-    Order.findByIdAndRemove(id)
-    .then(data => {
-    if (!data) {
-        res.status(404).send({
-            message: `Cannot delete Order with id=${id}. Maybe Order was not found!`
-        });
-    } else {
-        res.send({
-            message: "Order was deleted successfully!"
-        });
-    }
-    })
-    .catch(err => {
-        res.status(500).send({
-            message: "Could not delete Order with id=" + id
-        });
-    });
-};
-
-// Delete all Orders from the database.
-exports.deleteAll = (req, res) => {
-    Order.deleteMany({})
-    .then(data => {
-        res.send({
-            message: `${data.deletedCount} Orders were deleted successfully!`
-        });
-    })
-    .catch(err => {
-        res.status(500).send({
-        message:
-            err.message || "Some error occurred while removing all orders."
+            message:
+            err.message || "Some error occurred while retrieving users."
         });
     });
 };

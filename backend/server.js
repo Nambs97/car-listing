@@ -1,11 +1,13 @@
 const express = require('express');
-const passport = require("passport");
+const cors = require('cors');
+const passport = require('passport');
 require('dotenv').config();
 
 //Set up Express App
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 //Error handling middleware
 app.use(function(err, req, res, next) {

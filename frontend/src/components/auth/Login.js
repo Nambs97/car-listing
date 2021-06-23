@@ -18,13 +18,13 @@ class Login extends Component {
   componentDidMount() {
     // If logged in and user navigates to Login page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/cars");
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard"); // push user to dashboard when they login
+      this.props.history.push("/cars"); // push user to dashboard when they login
     }
     
     if (nextProps.errors) {
@@ -75,11 +75,12 @@ class Login extends Component {
                   id="username"
                   type="text"
                   className={classnames("", {
-                    invalid: errors.username
+                    invalid: errors.username || errors.usernamenotfound
                   })}
                 />
                 <label htmlFor="username">Username</label>
                 <span className="red-text">{errors.username}</span>
+                <span className="red-text">{errors.usernamenotfound}</span>
               </div>
               <div className="input-field col s12">
                 <input

@@ -35,11 +35,31 @@ exports.create = (req, res) => {
 };
 
 
-// Retrieve all Cars from the database.
+// Retrieve all Cars or Some responding to condition from the database.
 exports.findAll = (req, res) => {
-    Car.find()
+    const title = req.query.title;
+    const description = req.query.description;
+    //var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
+    var condition = {};
+    if (title && !description) {
+        condition = { title: { $regex: new RegExp(title), $options: "i" } }
+    } else if (!title && description) {
+        condition = { description: { $regex: new RegExp(description), $options: "i" } }
+    } else if (title && description) {
+        condition = { 
+            title: { $regex: new RegExp(title), $options: "i" },
+            description: { $regex: new RegExp(description), $options: "i" }
+        }
+    }
+
+    Car.find(condition)
     .then(data => {
-        res.send(data);
+        if (data.length > 0) {
+            res.send(data);
+        } else {
+            res.status(404).send({ message: "Not found Car with current filter" });
+        }
+        
     })
     .catch(err => {
         res.status(500).send({

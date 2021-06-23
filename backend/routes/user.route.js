@@ -16,5 +16,17 @@ router.post('/users/register', User.register);
 // @access Public
 router.post('/users/login', User.login);
 
+//GET : Retrieve all users from Database
+// @route GET api/users
+// @desc Retrieve users
+// @access Public
+router.get('/users', User.findAll);
+
+//GET : Retrieve one users by ID from Database
+// @route GET api/users/:id
+// @desc Retrieve users
+// @access Public
+router.get('/users/:id', User.findOne);
+
 
 module.exports = router;

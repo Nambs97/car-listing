@@ -1,3 +1,12 @@
 export const GET_ERRORS = "GET_ERRORS";
 export const USER_LOADING = "USER_LOADING";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const POST_CAR = "POST_CAR";
+export const SET_CURRENT_CAR = "SET_CURRENT_CAR";
+export const RETRIEVE_CARS = "RETRIEVE_CARS";
+export const UPDATE_CAR = "UPDATE_CAR";
+export const DELETE_CAR = "DELETE_CAR";
+export const DELETE_ALL_CARS = "DELETE_ALL_CARS";
+export const POST_COMMENT = "POST_COMMENT";
+export const RETRIEVE_COMMENTS = "RETRIEVE_COMMENTS";
+export const RETRIEVE_COMMENTORS = "RETRIEVE_COMMENTORS";
